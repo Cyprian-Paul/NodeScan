@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NodeScan | Network Monitoring Dashboard</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- LOGIN PAGE -->
+  <div id="login-page" class="page active">
+    <div class="login-bg">
+      <div class="grid-overlay"></div>
+      <div class="scanline"></div>
+    </div>
+    <div class="login-container">
+      <div class="login-logo">
+        <div class="logo-icon">
+          <span class="pulse-ring"></span>
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="4" fill="#00ff88"/>
+            <path d="M2 14 Q6 6 14 6 Q22 6 26 14 Q22 22 14 22 Q6 22 2 14Z" stroke="#00ff88" stroke-width="1.5" fill="none" opacity="0.5"/>
+            <circle cx="14" cy="14" r="10" stroke="#00ff88" stroke-width="0.5" fill="none" stroke-dasharray="3 4"/>
+          </svg>
+        </div>
+        <span class="logo-text">Node<span class="accent">Scan</span></span>
+      </div>
+      <p class="login-tagline">Real-time network intelligence for IT teams</p>
+
+      <form class="login-form" id="login-form" onsubmit="return false;">
+        <div class="form-group">
+          <label>USERNAME</label>
+          <div class="input-wrapper">
+            <input type="text" id="username" placeholder="admin" autocomplete="off" />
+            <span class="input-line"></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>PASSWORD</label>
+          <div class="input-wrapper">
+            <input type="password" id="password" placeholder="••••••••" />
+            <span class="input-line"></span>
+          </div>
+        </div>
+        <div id="login-error" class="login-error hidden">Invalid credentials. Try admin / admin123</div>
+        <button class="btn-login" id="btn-login" onclick="handleLogin()">
+          <span>AUTHENTICATE</span>
+          <span class="btn-arrow">→</span>
+        </button>
+        <p class="login-hint">Demo: <code>admin</code> / <code>admin123</code></p>
+      </form>
+
+      <div class="login-footer">
+        <span>SECURED CONNECTION</span>
+        <span class="dot-sep">•</span>
+        <span>TLS 1.3</span>
+        <span class="dot-sep">•</span>
+        <span>v2.4.1</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD PAGE -->
+  <div id="dashboard-page" class="page">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon sm">
+          <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="4" fill="#00ff88"/>
+            <path d="M2 14 Q6 6 14 6 Q22 6 26 14 Q22 22 14 22 Q6 22 2 14Z" stroke="#00ff88" stroke-width="1.5" fill="none" opacity="0.5"/>
+          </svg>
+        </div>
+        <span class="logo-text sm">Node<span class="accent">Scan</span></span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="#" class="nav-item active" data-section="overview">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="1" stroke-width="2"/><rect x="3" y="14" width="7" height="7" rx="1" stroke-width="2"/><rect x="14" y="14" width="7" height="7" rx="1" stroke-width="2"/></svg>
+          <span>Overview</span>
+        </a>
+        <a href="#" class="nav-item" data-section="devices">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="2" y="6" width="20" height="12" rx="2" stroke-width="2"/><path d="M8 6V4M16 6V4" stroke-width="2"/><circle cx="12" cy="12" r="2" stroke-width="2"/></svg>
+          <span>Devices</span>
+        </a>
+        <a href="#" class="nav-item" data-section="alerts">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0" stroke-width="2"/></svg>
+          <span>Alerts</span>
+          <span class="badge" id="alert-badge">3</span>
+        </a>
+        <a href="#" class="nav-item" data-section="logs">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke-width="2"/><polyline points="14,2 14,8 20,8" stroke-width="2"/><line x1="16" y1="13" x2="8" y2="13" stroke-width="2"/><line x1="16" y1="17" x2="8" y2="17" stroke-width="2"/></svg>
+          <span>Event Log</span>
+        </a>
+        <a href="#" class="nav-item" data-section="add-device">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="10" stroke-width="2"/><line x1="12" y1="8" x2="12" y2="16" stroke-width="2"/><line x1="8" y1="12" x2="16" y2="12" stroke-width="2"/></svg>
+          <span>Add Device</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="user-info">
+          <div class="user-avatar">A</div>
+          <div>
+            <div class="user-name">Admin</div>
+            <div class="user-role">IT Administrator</div>
+          </div>
+        </div>
+        <button class="btn-logout" onclick="handleLogout()">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9" stroke-width="2"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- TOP BAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <h1 class="page-title" id="page-title">Overview</h1>
+          <span class="live-badge"><span class="live-dot"></span>LIVE</span>
+        </div>
+        <div class="topbar-right">
+          <div class="clock" id="clock"></div>
+          <div class="network-health" id="network-health-badge">
+            <span class="health-dot green"></span>
+            <span>Network Healthy</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- OVERVIEW SECTION -->
+      <section id="section-overview" class="section active">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Total Devices</div>
+            <div class="stat-value" id="stat-total">8</div>
+            <div class="stat-sub">Monitored endpoints</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Online</div>
+            <div class="stat-value green" id="stat-online">6</div>
+            <div class="stat-sub">Devices responding</div>
+          </div>
+          <div class="stat-card red">
+            <div class="stat-label">Offline</div>
+            <div class="stat-value red" id="stat-offline">2</div>
+            <div class="stat-sub">No response</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Uptime</div>
+            <div class="stat-value" id="stat-uptime">97.4%</div>
+            <div class="stat-sub">Last 30 days</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Avg Ping</div>
+            <div class="stat-value" id="stat-ping">18ms</div>
+            <div class="stat-sub">Response time</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-label">Active Alerts</div>
+            <div class="stat-value orange" id="stat-alerts">3</div>
+            <div class="stat-sub">Require attention</div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-card wide">
+            <div class="chart-header">
+              <span class="chart-title">Ping Response History (ms)</span>
+              <span class="chart-sub">Last 12 checks</span>
+            </div>
+            <canvas id="ping-chart" height="120"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-header">
+              <span class="chart-title">Device Status</span>
+            </div>
+            <canvas id="status-donut" height="160"></canvas>
+            <div class="donut-legend">
+              <span><span class="leg-dot green"></span>Online</span>
+              <span><span class="leg-dot red"></span>Offline</span>
+              <span><span class="leg-dot orange"></span>Warning</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="device-quick-list">
+          <div class="section-heading">Device Quick View</div>
+          <div id="quick-device-list" class="quick-list"></div>
+        </div>
+      </section>
+
+      <!-- DEVICES SECTION -->
+      <section id="section-devices" class="section">
+        <div class="section-heading-row">
+          <div class="section-heading">All Devices</div>
+          <input type="text" class="search-input" id="device-search" placeholder="Search by name or IP..." oninput="renderDeviceTable()" />
+        </div>
+        <div class="table-card">
+          <table class="device-table">
+            <thead>
+              <tr>
+                <th>Device Name</th>
+                <th>IP Address</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Ping (ms)</th>
+                <th>Uptime %</th>
+                <th>Last Seen</th>
+              </tr>
+            </thead>
+            <tbody id="device-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ALERTS SECTION -->
+      <section id="section-alerts" class="section">
+        <div class="section-heading">Active Alerts</div>
+        <div id="alerts-list" class="alerts-list"></div>
+      </section>
+
+      <!-- EVENT LOG SECTION -->
+      <section id="section-logs" class="section">
+        <div class="section-heading-row">
+          <div class="section-heading">Event History Log</div>
+          <button class="btn-clear" onclick="clearLog()">Clear Log</button>
+        </div>
+        <div class="log-container" id="event-log"></div>
+      </section>
+
+      <!-- ADD DEVICE SECTION -->
+      <section id="section-add-device" class="section">
+        <div class="section-heading">Add New Device</div>
+        <div class="add-device-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Device Name</label>
+              <input type="text" id="new-name" placeholder="e.g. Core Switch 02" />
+            </div>
+            <div class="form-group">
+              <label>IP Address</label>
+              <input type="text" id="new-ip" placeholder="e.g. 192.168.1.50" />
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Device Type</label>
+              <select id="new-type">
+                <option value="Router">Router</option>
+                <option value="Switch">Switch</option>
+                <option value="Server">Server</option>
+                <option value="Firewall">Firewall</option>
+                <option value="Workstation">Workstation</option>
+                <option value="Access Point">Access Point</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Initial Status</label>
+              <select id="new-status">
+                <option value="online">Online</option>
+                <option value="offline">Offline</option>
+                <option value="warning">Warning</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Ping (ms)</label>
+              <input type="number" id="new-ping" placeholder="e.g. 12" min="1" max="999" />
+            </div>
+            <div class="form-group">
+              <label>Uptime %</label>
+              <input type="number" id="new-uptime" placeholder="e.g. 99.5" min="0" max="100" step="0.1" />
+            </div>
+          </div>
+          <div id="add-error" class="login-error hidden">Please fill in all fields correctly.</div>
+          <button class="btn-add" onclick="addDevice()">Add Device to Monitor</button>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
